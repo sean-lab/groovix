@@ -2,7 +2,7 @@
 
 **PLAY · LOOP · MIX.** A three-track groovebox that runs in the browser: synths and recorded
 instruments, a 16-step drum machine, loop recording, a voice track that turns a hummed melody into
-notes, and 22 example mixes from house and lo-fi to bossa nova, ppongjjak and samba.
+notes, and 26 example mixes from house and lo-fi to bossa nova, ppongjjak, samba and Pachelbel's Canon.
 The screen is available in Korean, English and Japanese.
 
 Live: <https://sanghyunpark.pages.dev/apps/groovix/>
@@ -15,7 +15,8 @@ Live: <https://sanghyunpark.pages.dev/apps/groovix/>
 - **Beats:** six synthesized drum voices on a 16-step grid with accents and swing.
 - **Voice:** upload a recording (or use the microphone where the browser allows it); it plays with
   the loop, and TO NOTES tracks its pitch (YIN) into notes on any track.
-- **Files:** SAVE/OPEN a song file (`.json`), EXPORT a `.zip` with a WAV of the song and a MIDI file.
+- **Files:** NEW clears everything for a song of your own, SAVE/OPEN a song file (`.json`), EXPORT a `.zip`
+  with a WAV of the song and a MIDI file.
 
 ## How it's built
 
@@ -46,6 +47,6 @@ covered by it: they keep their own Creative Commons Attribution 3.0 license, lis
 ## 한국어
 
 브라우저에서 돌아가는 3트랙 그루브박스입니다. 신스와 실제 녹음 악기, 16칸 드럼 머신, 루프 녹음,
-콧노래를 음표로 바꾸는 목소리 트랙, 그리고 하우스·로파이부터 보사노바·뽕짝·삼바까지 예시 믹스 22곡이 들어 있습니다.
+콧노래를 음표로 바꾸는 목소리 트랙, 그리고 하우스·로파이부터 보사노바·뽕짝·삼바, 파헬벨의 캐논까지 예시 믹스 26곡이 들어 있습니다.
 화면은 한국어·영어·일본어를 지원합니다. 라이브러리 없이 HTML, CSS, 자바스크립트와 웹 오디오만으로 만들었습니다.
 코드는 [MIT 라이선스](LICENSE)를 따릅니다. 녹음 악기 소리는 여기에 포함되지 않으며, 출처와 라이선스(CC BY 3.0)는 [CREDITS.md](CREDITS.md)에 있습니다.

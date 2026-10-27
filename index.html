@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="GROOVIX: a three-track groovebox in the browser. Synths, recorded instruments, a drum machine, a voice track and 22 example mixes, built with the Web Audio API.">
+<meta name="description" content="GROOVIX: a three-track groovebox in the browser. Synths, recorded instruments, a drum machine, a voice track and 26 example mixes, built with the Web Audio API.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d4d7db'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%2323292f'/%3E%3Cpath d='M16 16 21 10' stroke='%23f4f4f2' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='25.5' cy='6.5' r='2.5' fill='%23e0352a'/%3E%3C/svg%3E">
 <style>
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -77,7 +77,7 @@ h2,h3,p{margin:0}
 .rig{max-width:1480px;margin:0 auto;padding-inline:var(--gutter);padding-block:8px 0}
 
 /* rail */
-.rail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px) auto;grid-template-areas:"brand screen out";align-items:center;gap:14px 28px;padding:8px var(--pad) 14px;border-bottom:1px solid var(--rule)}
+.rail{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,360px) auto;grid-template-areas:"brand files screen out";align-items:center;gap:14px 28px;padding:8px var(--pad) 14px;border-bottom:1px solid var(--rule)}
 .brand{grid-area:brand;display:flex;flex-direction:column;gap:6px}
 .wordmark{font-family:var(--f-display);font-size:var(--t-xl);line-height:1;letter-spacing:.03em;white-space:nowrap}
 .wordmark span{color:var(--led)}
@@ -145,13 +145,14 @@ h2,h3,p{margin:0}
 @media (hover:hover){.opt:hover,.tog:hover,.navbtn:hover,.tbtn:hover,.mini:hover,.plain:hover,.lsel:hover{background:var(--panel)}}
 
 /* transport + lanes */
-.transport{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 22px;padding:14px var(--pad) 10px;user-select:none;-webkit-user-select:none}
+.transport{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 18px;padding:14px var(--pad) 10px;user-select:none;-webkit-user-select:none}
 /* every control in the transport shares one 40px centre line; captions hang below it */
 .transport .tgroup > .lcd,.transport .tgroup > .trow{margin-top:2px}
 .transport .ctl.k{margin-top:-3px}
 .transport .ctl.t{margin-top:5px}
 .mixsel{border-radius:5px}
-.files{margin-left:auto}
+/* song file buttons live in the top rail, which has room for them; the transport row below then fits on one line */
+.files{grid-area:files}
 .vlane{grid-column:1 / -1}
 .vlane .lhead{min-height:0}
 .vbtns{display:flex;gap:6px}
@@ -163,8 +164,9 @@ h2,h3,p{margin:0}
 .vconv .bnote{flex:1 1 260px}
 .plain:disabled{opacity:.45;cursor:default}
 #micBtn[aria-pressed="true"] .led{animation:blink 1s steps(1,end) infinite}
-.fbtns{display:flex;gap:6px}
-.fbtns .tbtn{padding:0 12px 0 10px;gap:7px}
+.fbtns{display:flex;gap:5px}
+.fbtns .tbtn{padding:0 10px 0 9px;gap:6px;font-size:var(--t-xs);letter-spacing:.1em}
+#newBtn.armed{border-color:var(--led);color:var(--led)}
 .tbtn svg.ic{fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 .tbtn:disabled{opacity:.55;cursor:progress}
 .guide{display:flex;flex-wrap:wrap;gap:6px 20px;list-style:none;margin:0;padding:0 var(--pad) 14px;font-size:var(--t-sm);color:var(--ink-soft)}
@@ -209,7 +211,7 @@ h2,h3,p{margin:0}
 .credits{margin:0;padding:12px var(--pad) 14px;font-size:var(--t-xs);line-height:1.5;color:var(--ink-soft);max-width:110ch}
 .credits a{color:inherit}
 .trtag{font:500 var(--t-xs)/1 var(--f-ui);letter-spacing:.12em;padding:3px 6px 2px;border-radius:3px;color:var(--panel);background:var(--tc,var(--c1))}
-.mixsel{font-family:var(--f-display);letter-spacing:.08em;height:40px;min-width:190px}
+.mixsel{font-family:var(--f-display);letter-spacing:.08em;height:40px;width:clamp(210px,19vw,270px);text-overflow:ellipsis}
 .tcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .tcard{display:flex;flex-direction:column;gap:8px;min-width:0;padding:8px 10px 6px;border:1px solid var(--rule);border-top:3px solid var(--tc);border-radius:4px;background-color:var(--panel);background-image:var(--plate)}
 .tcard.sel{background:var(--panel-hi);box-shadow:inset 0 1px 0 rgb(255 255 255 / .7),0 1px 2px rgb(0 0 0 / .12);border-color:var(--ink);border-top-color:var(--tc)}
@@ -245,7 +247,7 @@ h2,h3,p{margin:0}
 .perf{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;padding:0 var(--pad) 9px;user-select:none;-webkit-user-select:none}
 .pgroup{display:flex;align-items:center;gap:6px}
 .pval{min-width:38px;text-align:center;font:500 var(--t-sm)/1 var(--f-mono);font-variant-numeric:tabular-nums}
-.keys{position:relative;display:flex;height:120px;border-top:4px solid var(--c2);touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+.keys{position:relative;display:flex;height:clamp(76px,14vh,120px);border-top:4px solid var(--c2);touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
 .key{position:relative}
 .key.w{flex:1 1 0;min-width:0;margin-right:-1px;background:linear-gradient(to bottom,var(--key-w) 0,var(--key-w) 93%,var(--key-w-edge) 100%);border:1px solid var(--key-w-edge);border-top:0;border-radius:0 0 5px 5px}
 .key.w:last-child{margin-right:0}
@@ -257,12 +259,32 @@ h2,h3,p{margin:0}
 .key.b .kb{bottom:7px;font:500 9px/1 var(--f-mono);color:var(--key-b-ink)}
 .nn{bottom:26px;font:500 9px/1 var(--f-ui);color:var(--key-ink)}
 
+/* The dock stays in view at the bottom, so it is kept short: on wider screens the playing controls stand in a column
+   beside the keys instead of a row above them, and the keys follow the window height. Focus never lands behind it. */
+html{scroll-padding-bottom:150px}
+@media (min-width:620px){
+  .dock:not(.folded){display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:18px;align-items:center}
+  .dock:not(.folded) .perf{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:6px;padding:0}
+  .dock:not(.folded) .perf .hint{display:none}
+  .dock:not(.folded) .kblabel{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .dock:not(.folded) .kblabel::before{display:inline-block;margin-right:7px;vertical-align:-1px}
+  .dock:not(.folded) .pgroup .tcap{width:30px}
+  .dock:not(.folded) #kbdToggle{align-self:flex-start;height:26px}
+  .dock.folded .perf{padding-bottom:0}
+}
+
 /* responsive */
 @media (max-width:1399px){.modules{grid-template-columns:repeat(3,auto)}}
 
 @media (max-width:959px){.modules{grid-template-columns:repeat(2,auto)}.lanes{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1099px){.rail{grid-template-columns:minmax(0,1fr) minmax(0,360px) auto;grid-template-areas:"brand screen out" "files files files"}.files{justify-self:start;align-items:flex-start}}
 @media (max-width:719px){
-  .rail{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand out" "screen screen";gap:14px 16px}
+  .rail{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand out" "screen screen" "files files";gap:14px 16px}
+  .files{justify-self:stretch}
+  .fbtns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .fbtns .tbtn{justify-content:center;padding:0 4px;gap:5px;letter-spacing:.06em}
+  .tbtns{width:100%}
+  .tbtns .tbtn{flex:1 1 0;min-width:0;justify-content:center;padding:0 6px;gap:7px}
 }
 @media (max-width:619px){
   .modules{grid-template-columns:minmax(0,1fr)}
@@ -270,7 +292,7 @@ h2,h3,p{margin:0}
   .ctls{flex-wrap:wrap}
   .bgrid{grid-template-columns:42px repeat(16,minmax(0,1fr));column-gap:2px}
   .rowlab small{display:none}
-  .keys{height:96px}
+  .keys{height:clamp(72px,11vh,96px)}
   .tcards{grid-template-columns:minmax(0,1fr)}
   .tcard{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name ctl" "sel ctl";align-items:center;gap:6px 12px;padding:8px 10px}
   .tcard .trsel{grid-area:name}
@@ -299,6 +321,16 @@ h2,h3,p{margin:0}
       <div class="langs" role="group" aria-label="언어 · Language · 言語">
         <button type="button" class="lang" data-lang="ko" lang="ko" aria-pressed="true" title="한국어">한</button><button type="button" class="lang" data-lang="en" lang="en" aria-pressed="false" title="English">EN</button><button type="button" class="lang" data-lang="ja" lang="ja" aria-pressed="false" title="日本語">日</button>
       </div>
+    </div>
+    <div class="tgroup files">
+      <div class="fbtns">
+        <button type="button" class="tbtn" id="newBtn" title="새 곡: 음표, 비트, 목소리를 모두 비우고 처음부터 시작해요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2v8M2 6h8"/></svg><span>NEW</span></button>
+        <button type="button" class="tbtn" id="saveBtn" hidden title="곡 파일 저장 (.json): 나중에 다시 열어서 이어서 연주하고 고칠 수 있어요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6M3.5 5 6 7.5 8.5 5M1.5 9v1.5h9V9"/></svg><span>SAVE</span></button>
+        <button type="button" class="tbtn" id="openBtn" title="곡 파일 열기: 저장해 둔 .json 파일을 불러와요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 7.5v-6M3.5 4 6 1.5 8.5 4M1.5 9v1.5h9V9"/></svg><span>OPEN</span></button>
+        <button type="button" class="tbtn" id="exportBtn" hidden title="소리 내보내기 (.zip): 곡을 두 번 반복한 WAV 소리 파일과, 거라지밴드에서 열 수 있는 MIDI 파일이 들어 있어요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h1.6l1.2-3.2 2 6.4 2-8.4 1.4 5.2H11"/></svg><span>EXPORT</span></button>
+      </div>
+      <span class="tcap" id="fileMsg" aria-live="polite"></span>
+      <input type="file" id="songFile" accept=".json,application/json" hidden>
     </div>
     <div class="screen">
       <canvas id="scope" aria-hidden="true"></canvas>
@@ -329,15 +361,6 @@ h2,h3,p{margin:0}
     </div>
     <div data-k="swing"></div>
     <div data-t="click"></div>
-    <div class="tgroup files">
-      <div class="fbtns">
-        <button type="button" class="tbtn" id="saveBtn" hidden title="곡 파일 저장 (.json): 나중에 다시 열어서 이어서 연주하고 고칠 수 있어요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6M3.5 5 6 7.5 8.5 5M1.5 9v1.5h9V9"/></svg><span>SAVE</span></button>
-        <button type="button" class="tbtn" id="openBtn" title="곡 파일 열기: 저장해 둔 .json 파일을 불러와요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 7.5v-6M3.5 4 6 1.5 8.5 4M1.5 9v1.5h9V9"/></svg><span>OPEN</span></button>
-        <button type="button" class="tbtn" id="exportBtn" hidden title="소리 내보내기 (.zip): 곡을 두 번 반복한 WAV 소리 파일과, 거라지밴드에서 열 수 있는 MIDI 파일이 들어 있어요"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h1.6l1.2-3.2 2 6.4 2-8.4 1.4 5.2H11"/></svg><span>EXPORT</span></button>
-      </div>
-      <span class="tcap" id="fileMsg" aria-live="polite"></span>
-      <input type="file" id="songFile" accept=".json,application/json" hidden>
-    </div>
   </section>
   <ol class="guide" aria-label="처음이라면 이렇게 해 보세요">
     <li><b>1</b>예시 믹스를 골라요</li>
@@ -657,9 +680,9 @@ const PATTERNS = [
   { n: 'JAZZ', ko: '재즈', rows: { kick: 'x.........x.....', snare: '.......x.......x', hat: 'X..xX..xX..xX..x' } },
   { n: 'CINEMATIC', ko: '시네마틱', rows: { kick: 'X.......X.....x.', perc: '............x...' } },
   { n: 'ROCK', ko: '록', rows: { kick: 'X.....X.X.......', snare: '....X.......X...', hat: 'x.x.x.x.x.x.x.x.', ohat: '..............x.' } },
-  { n: 'TROT', ko: '트로트', rows: { kick: 'X.......X.......', snare: '....X.......X...', hat: '..x...x...x...x.' } },
+  { n: 'TROT', ko: '트로트', rows: { kick: 'X...x...X...x...', snare: '....X.......X...', hat: 'x...x...x...x...', ohat: '..x...x...x...x.' } },
   { n: 'SAMBA', ko: '삼바', rows: { kick: 'x...X...x...X...', clap: 'x.x..x.x.x..x.x.', hat: 'xxxXxxxXxxxXxxxX', perc: '..X...x...X...x.' } },
-  { n: 'REGGAE', ko: '레게', rows: { kick: '........X.......', snare: '........X.......', hat: 'x.x.x.x.x.x.x.x.' } },
+  { n: 'REGGAE', ko: '레게', rows: { kick: '........X.......', snare: '........X.......', hat: 'x.Xxx.Xxx.Xxx.Xx' } },
   { n: 'DEMBOW', ko: '뎀보', rows: { kick: 'X...X...X...X...', snare: '...X..X....X..X.', hat: '..x...x...x...x.' } },
   { n: 'SALSA', ko: '살사', rows: { kick: '......x.......x.', clap: 'x..x..x...x.x...', hat: 'X.xxX.xxX.xxX.xx', perc: 'X.x.X.x.X.x.X.x.' } },
   { n: 'TANGO', ko: '탱고', rows: { kick: 'X..x..x.X...X...', snare: '....x.......x...' } },
@@ -706,6 +729,8 @@ const comp = (c1, c2) => `${c1} . . ${c1} - . . . ${c2} . . ${c2} - . . .`;     
 const batida = (c1, c2) => `${c1} . ${c1} . . ${c1} . ${c1} . ${c2} . ${c2} ${c2} . ${c2} .`;  // bossa nova guitar
 const pompe = (c1, c2) => `${c1} . ${c1} . ${c1} . ${c1} . ${c2} . ${c2} . ${c2} . ${c2} .`;   // gypsy jazz 'la pompe'
 const montuno = (hi, mid, lo) => `${hi} . ${mid} . ${hi} ${mid} . ${lo} . ${hi} . ${mid} ${hi} . ${mid} .`;
+// Reggae organ, one player's two hands: a low 'bubble' on every off-beat (and the swung 16th after it), the skank chord on beats 2 and 4.
+const bubble = (lo, hi, skank) => `. . ${lo} ${hi} ${skank}! . ${lo} ${hi} . . ${lo} ${hi} ${skank}! . ${lo} ${hi}`;
 const MIXES = [
   {
     n: 'DEEP HOUSE', ko: '딥 하우스', bpm: 122, swing: 0.15, bars: 4, pat: 0,
@@ -782,11 +807,14 @@ const MIXES = [
   },
   // World rhythms: each country's best-known groove, played on the same three tracks.
   {
+    // 쿵짝: the bass on every beat (root, then the fifth below, walking up chromatically into the next chord), piano chops on
+    // every off-beat over a four-on-the-floor kick and open hats. The melody keeps to the trot minor scale (A B C E F) and the
+    // saxophone scoops into each note with a wide vibrato; the quick F-E turns are the 'kkeokki' a trot singer puts in.
     n: 'TROT', ko: '뽕짝 · 한국', world: true, bpm: 132, swing: 0, bars: 4, pat: PT('TROT'),
     tracks: [
-      { pi: PI('ELECTRIC BASS'), vol: 0.85, notes: line(bars('R - - . . . . . F - - . . . R .', [['A2', 0, 'E2'], ['D3', 0, 'A2'], ['E2', 0, 'B2'], ['A2', 0, 'E2']])) },
-      { pi: PI('PIPE ORGAN'), vol: 0.5, p: { aa: 0.005, ar: 0.12, rsize: 1.6, rmix: 0.12 }, notes: line(stabs([['A3', 'C4', 'E4'], ['A3', 'D4', 'F4'], ['Gs3', 'B3', 'D4', 'E4'], ['A3', 'C4', 'E4']], [[4, 2], [12, 2]]), 0.7) },
-      { pi: PI('SAXOPHONE'), vol: 0.7, p: { rmix: 0.25 }, notes: line('E5 - - - - - C5 - B4 - A4 - B4 - C5 - | D5 - - - - - F5 - E5 - D5 - C5 - - - | B4 - - - C5 - B4 - Gs4 - - - E4 - - - | A4 - - - - - - - . . E4 - A4 - B4 -') },
+      { pi: PI('ELECTRIC BASS'), vol: 0.85, notes: line('A2 - . . E2 - . . A2 - . . Cs3 - . . | D3 - . . A2 - . . D3 - . . Ds2 - . . | E2 - . . B2 - . . E2 - . . Gs2 - . . | A2 - . . E2 - . . A2 - . . E2 - Gs2 -') },
+      { pi: PI('GRAND PIANO'), vol: 0.55, p: { ar: 0.1, rmix: 0.12 }, notes: line(stabs([['A3', 'C4', 'E4'], ['A3', 'D4', 'F4'], ['Gs3', 'B3', 'D4', 'E4'], ['A3', 'C4', 'E4']], [[2, 1], [6, 1], [10, 1], [14, 1]]), 0.7) },
+      { pi: PI('SAXOPHONE'), vol: 0.7, p: { glide: 0.035, lp: 0.22, lr: 5.5, dt: 0.5, dfb: 0.2, dmix: 0.12, rmix: 0.25 }, notes: line('E5 - - - - - F5 E5 C5 - - - B4 - A4 - | D5 - F5 - A5 - - - F5 - E5 - D5 - - - | E5 - - - F5 E5 - - B4 - C5 - B4 - Gs4 - | A4 - - - - - - - - - - . . B4 C5 D5') },
     ],
   },
   {
@@ -798,11 +826,15 @@ const MIXES = [
     ],
   },
   {
-    n: 'REGGAE', ko: '레게 · 자메이카', world: true, bpm: 76, swing: 0.35, bars: 4, pat: PT('REGGAE'),
+    // One drop: kick and snare land together on beat 3 only, over shuffled hats. The organ bubbles on the off-beats and
+    // chops the skank on 2 and 4, the bass is deep and round with space in it, and a melodica-like lead trails a dub echo.
+    n: 'REGGAE', ko: '레게 · 자메이카', world: true, bpm: 76, swing: 0.4, bars: 4, pat: PT('REGGAE'),
     tracks: [
-      { pi: PI('ELECTRIC BASS'), vol: 0.9, notes: line('A2 - - - . . . . A2 - C3 - E3 - . . | D3 - - - . . . . D3 - Fs3 - A3 - . . | A2 - - - . . . . A2 - C3 - E3 - G3 - | Fs3 - - - . . . . D3 - - - A2 - - -') },
-      { pi: PI('ELECTRIC GUITAR'), vol: 0.5, p: { chorus: 0, ar: 0.08, dt: 0.75, dmix: 0.2 }, notes: line(stabs([['A3', 'C4', 'E4'], ['A3', 'D4', 'Fs4'], ['A3', 'C4', 'E4'], ['A3', 'D4', 'Fs4']], [[4, 1], [12, 1]]), 0.7) },
-      { pi: PI('TRUMPET'), vol: 0.6, p: { rmix: 0.3, dmix: 0.2 }, notes: line('. . . . . . . . E5 - - - D5 - C5 - | D5 - - - - - - - . . A4 - - - . . | . . . . . . . . E5 - - - G5 - E5 - | Fs5 - - - - - - - E5 - D5 - - - . .') },
+      { pi: PI('DEEP BASS'), vol: 1, p: { glide: 0.02, cut: 320, sub: 0.8, drive: 0.1 }, notes: line('A3 - - - . . A3 . . . E3 - G3 - A3 . | D4 - - - . . D4 . . . A3 - C4 - D4 . | A3 - - - . . A3 . . . E3 - G3 - A3 C4 | D4 - - - . . D4 . Fs4 - E4 - D4 - C4 .') },
+      { pi: PI('WARM POLY'), vol: 0.7, p: { w1: 'square', w2: 'sine', s2: 12, d2: 0, l1: 0.45, l2: 0.75, sub: 0.2, cut: 2400, res: 0.05, fenv: 0.15, fd: 0.06, fs: 0, key: 0.4, aa: 0.003, ad: 0.12, as: 0.8, ar: 0.05, lr: 6.5, lp: 0, la: 0.1, drive: 0.12, chorus: 2, dfb: 0.25, dmix: 0.08, rmix: 0.12 },
+        notes: line([bubble('A2+E3', 'C4', 'G4+C5+E5'), bubble('D3+A3', 'Fs3', 'Fs4+A4+D5'), bubble('A2+E3', 'C4', 'G4+C5+E5'), bubble('D3+A3', 'Fs3', 'Fs4+A4+D5')].join(' | '), 0.45) },
+      { pi: PI('MONO LEAD'), vol: 0.65, p: { w1: 'square', w2: 'sawtooth', s2: 0, d2: 6, l1: 0.7, l2: 0.35, sub: 0, noise: 0.05, cut: 1800, res: 0.12, fenv: 0.2, fa: 0.02, fd: 0.25, fs: 0.6, key: 0.6, aa: 0.02, ad: 0.4, as: 0.85, ar: 0.12, lr: 5, lp: 0.07, glide: 0.015, drive: 0.08, dt: 0.75, dfb: 0.5, dmix: 0.35, rmix: 0.2 },
+        notes: line('A4 - C5 - E5 - - - . . D5 - C5 - A4 - | D5 - - - - - - - . . . . A4 - B4 - | C5 - - - E5 - - - G5 - E5 - D5 - C5 - | D5 - - - Fs5 - - - E5 - - - . . . .') },
     ],
   },
   {
@@ -884,6 +916,45 @@ const MIXES = [
       { pi: PI('ELECTRIC BASS'), vol: 0.8, notes: line('A2 - - - E2 - - - A2 - - - E3 - - - | E2 - - - B2 - - - E3 - - - Gs2 - - - | D3 - - - A2 - - - A2 - - - E3 - - - | E2 - - - B2 - - - A2 - - - E3 - - -') },
       { pi: PI('ACOUSTIC GUITAR'), vol: 0.5, p: { ar: 0.08 }, notes: line([pompe('A3+C4+Fs4', 'A3+C4+Fs4'), pompe('Gs3+B3+D4', 'Gs3+B3+D4'), pompe('B3+D4+F4', 'A3+C4+Fs4'), pompe('Gs3+B3+D4', 'A3+C4+Fs4')].join(' | '), 0.6) },
       { pi: PI('STRINGS'), vol: 0.6, p: { aa: 0.03 }, notes: line('E5 - A5 - C6 - B5 - A5 - - - E5 - C5 - | B4 - - - D5 - F5 - Gs5 - - - B5 - Gs5 - | F5 - D5 - B4 - D5 - C5 - - - A4 - C5 - | B4 - D5 - Gs4 - B4 - A4 - - - - - . .', 0.75) },
+    ],
+  },
+  // Classical: public-domain pieces, a loop each, no drums.
+  {
+    // A string trio. The cello repeats the eight-note ground; the second violin plays the first violin's line two bars
+    // later (a canon), so the two violins always move in thirds and sixths; then the first violin breaks into eighths.
+    n: 'CANON', ko: '파헬벨', group: 'classical', bpm: 64, swing: 0, bars: 4, pat: PT('EMPTY'),
+    tracks: [
+      { pi: PI('STRINGS'), vol: 0.85, notes: line(Array(2).fill('D3 - - - A2 - - - B2 - - - Fs2 - - - | G2 - - - D2 - - - G2 - - - A2 - - -').join(' | '), 0.85) },
+      { pi: PI('STRINGS'), vol: 0.95, notes: line('D5 - - - Cs5 - - - B4 - - - A4 - - - | G4 - - - Fs4 - - - G4 - - - E4 - - - | Fs5 - - - E5 - - - D5 - - - Cs5 - - - | B4 - - - A4 - - - B4 - - - Cs5 - - -', 0.85) },
+      { pi: PI('STRINGS'), vol: 0.95, notes: line('Fs5 - - - E5 - - - D5 - - - Cs5 - - - | B4 - - - A4 - - - B4 - - - Cs5 - - - | D5 - Fs5 - A5 - G5 - Fs5 - D5 - Fs5 - E5 - | D5 - B4 - D5 - A4 - G4 - B4 - A4 - G4 -', 0.9) },
+    ],
+  },
+  {
+    // Eine kleine Nachtmusik, first movement: the opening is played by the whole string section in octaves.
+    n: 'EINE KLEINE', ko: '모차르트', group: 'classical', bpm: 132, swing: 0, bars: 4, pat: PT('EMPTY'),
+    tracks: [
+      { pi: PI('STRINGS'), vol: 0.95, notes: line('G2 - - - . . D2 - G2 - - - . . D2 - | G2 - D2 - G2 - B2 - D3 - - - - - . . | C3 - - - . . A2 - C3 - - - . . A2 - | C3 - A2 - Fs2 - A2 - D2 - - - - - . .', 0.9) },
+      { pi: PI('STRINGS'), vol: 0.85, notes: line('G3 - - - . . D3 - G3 - - - . . D3 - | G3 - D3 - G3 - B3 - D4 - - - - - . . | C4 - - - . . A3 - C4 - - - . . A3 - | C4 - A3 - Fs3 - A3 - D3 - - - - - . .', 0.9) },
+      { pi: PI('STRINGS'), vol: 1, p: { aa: 0.03 }, notes: line('G4 - - - . . D4 - G4 - - - . . D4 - | G4 - D4 - G4 - B4 - D5 - - - - - . . | C5 - - - . . A4 - C5 - - - . . A4 - | C5 - A4 - Fs4 - A4 - D4 - - - - - . .', 0.95) },
+    ],
+  },
+  {
+    // A small ensemble: cello, harp and flute. The theme from the last movement of the Ninth Symphony, in its own key.
+    n: 'ODE TO JOY', ko: '베토벤', group: 'classical', bpm: 112, swing: 0, bars: 4, pat: PT('EMPTY'),
+    tracks: [
+      { pi: PI('STRINGS'), vol: 0.95, notes: line('D3 - - - - - - - A2 - - - - - - - | A2 - - - - - - - Cs3 - - - - - - - | D3 - - - - - - - Fs2 - - - - - - - | A2 - - - - - - - E2 - - - A2 - - -', 0.85) },
+      { pi: PI('HARP'), vol: 0.8, notes: line(['D4 Fs4 A4 Fs4', 'Cs4 E4 G4 E4', 'D4 Fs4 A4 Fs4', 'Cs4 E4 A4 E4'].map(a => { const e = a.split(' ').map(n => n + ' -').join(' '); return e + ' ' + e; }).join(' | '), 0.8) },
+      { pi: PI('FLUTE'), vol: 0.95, notes: line('Fs5 - - - Fs5 - - - G5 - - - A5 - - - | A5 - - - G5 - - - Fs5 - - - E5 - - - | D5 - - - D5 - - - E5 - - - Fs5 - - - | Fs5 - - - - - E5 - E5 - - - - - - -', 0.9) },
+    ],
+  },
+  {
+    // Toccata and Fugue in D minor, the opening on the organ: the turn on A, the run down to C sharp and the resolution
+    // to D, then the same an octave lower. Played in three octaves at once, the way a full organ sounds it.
+    n: 'TOCCATA', ko: '바흐', group: 'classical', bpm: 112, swing: 0, bars: 4, pat: PT('EMPTY'),
+    tracks: [
+      { pi: PI('PIPE ORGAN'), vol: 1, notes: line('A3 G3 A3 - - - - - - - . . G3 F3 E3 D3 | Cs3 - - - - - - - D3 - - - - - - - | A2 G2 A2 - - - - - - - . . G2 F2 E2 D2 | Cs2 - - - - - - - D2 - - - - - - -', 1) },
+      { pi: PI('PIPE ORGAN'), vol: 1, notes: line('A4 G4 A4 - - - - - - - . . G4 F4 E4 D4 | Cs4 - - - - - - - D4 - - - - - - - | A3 G3 A3 - - - - - - - . . G3 F3 E3 D3 | Cs3 - - - - - - - D3 - - - - - - -', 1) },
+      { pi: PI('PIPE ORGAN'), vol: 1, notes: line('A5 G5 A5 - - - - - - - . . G5 F5 E5 D5 | Cs5 - - - - - - - D5 - - - - - - - | A4 G4 A4 - - - - - - - . . G4 F4 E4 D4 | Cs4 - - - - - - - D4 - - - - - - -', 1) },
     ],
   },
 ];
@@ -1023,6 +1094,10 @@ const TX = {
   '소리 파일을 만들고 있어요…': ['Rendering the audio…', '音声ファイルを作成中…'],
   '내보내지 못했어요': ['Export failed', '書き出しに失敗しました'],
   '곡을 불러왔어요': ['Song loaded', '曲を読み込みました'],
+  '새 곡: 음표, 비트, 목소리를 모두 비우고 처음부터 시작해요': ['New song: clear the notes, beat and voice and start from scratch', '新しい曲：音符、ビート、声をすべて消して最初から始めます'],
+  '한 번 더 누르면 지금 곡을 지우고 새로 시작해요': ['Press again to clear this song and start a new one', 'もう一度押すと、今の曲を消して新しく始めます'],
+  '새 곡을 시작했어요': ['New song started', '新しい曲を始めました'],
+  '새 곡': ['', '新しい曲'],
   'GROOVIX 곡 파일이 아니에요': ["That isn't a GROOVIX song file", 'GROOVIXの曲ファイルではありません'],
   '파일을 읽지 못했어요': ["Couldn't read the file", 'ファイルを読み込めませんでした'],
   '아르페지에이터': ['Arpeggiator', 'アルペジエーター'],
@@ -1085,7 +1160,8 @@ const TX = {
   '뽕짝 · 한국': ['ppongjjak · Korea', 'ポンチャック · 韓国'], '삼바 · 브라질': ['Brazil', 'サンバ · ブラジル'], '레게 · 자메이카': ['Jamaica', 'レゲエ · ジャマイカ'],
   '레게톤 · 푸에르토리코': ['Puerto Rico', 'レゲトン · プエルトリコ'], '살사 · 쿠바': ['Cuba', 'サルサ · キューバ'], '탱고 · 아르헨티나': ['Argentina', 'タンゴ · アルゼンチン'],
   '시티팝 · 일본': ['Japan', 'シティポップ · 日本'], '방그라 · 인도': ['India', 'バングラ · インド'],
-  '장르 믹스': ['Genres', 'ジャンル'], '세계의 리듬': ['World rhythms', '世界のリズム'], '재즈 믹스': ['Jazz', 'ジャズ'],
+  '장르 믹스': ['Genres', 'ジャンル'], '세계의 리듬': ['World rhythms', '世界のリズム'], '재즈 믹스': ['Jazz', 'ジャズ'], '클래식': ['Classical', 'クラシック'],
+  '파헬벨': ['Pachelbel', 'パッヘルベル'], '모차르트': ['Mozart', 'モーツァルト'], '베토벤': ['Beethoven', 'ベートーヴェン'], '바흐': ['Bach', 'バッハ'],
   // voice track
   '목소리': ['', 'ボイス'],
   '목소리 볼륨': ['Voice level', 'ボイスの音量'], '목소리 음소거': ['Mute the voice', 'ボイスをミュート'],
@@ -2001,6 +2077,7 @@ function renderUi() {
   $('#panel').hidden = !ui.panel;
   $('#panelToggle').setAttribute('aria-expanded', String(ui.panel));
   $('#keys').hidden = !ui.kbd;
+  $('.dock').classList.toggle('folded', !ui.kbd);
   const kt = $('#kbdToggle');
   kt.setAttribute('aria-expanded', String(ui.kbd));
   kt.textContent = tx(ui.kbd ? '건반 접기' : '건반 펴기');
@@ -2055,6 +2132,7 @@ function loadMix(i) {
 }
 // After a whole new song arrives (example mix or song file): push it to the sound engines and redraw everything.
 function refreshAfterLoad() {
+  disarmNew();
   if (ctx) {
     for (const e of allEng()) e.applyAll(false);
     const t = ctx.currentTime;
@@ -2070,6 +2148,36 @@ function refreshAfterLoad() {
   rollDirty = true; save();
 }
 function loadPattern(i) { patternIndex = i; seq = parsePattern(PATTERNS[i]); renderGrid(); save(); }
+// NEW: a blank song. No notes, no beat, no voice; each track back on its basic sound, 100 BPM, four bars.
+// When there is something to lose, the first press only arms the button and the second press (within 4.5 s) clears.
+const songIsEmpty = () => !voice && tracks.every(tr => !tr.notes.length) && seq.every(r => r.every(v => !v));
+let newArmTimer = 0;
+function disarmNew() { clearTimeout(newArmTimer); $('#newBtn').classList.remove('armed'); }
+function newSong() {
+  disarmNew();
+  releaseAllInput();
+  if (rec.on) setRec(false);
+  arp.latched = []; arp.fresh = true;
+  if (ctx) { const now = ctx.currentTime; clock.ab = beatAt(now); clock.at = now; }
+  mixIndex = -1;
+  tracks.forEach((tr, k) => {
+    presetValues(TRACKS[k].pi, tr);
+    tr.edited = false; tr.notes = [];
+    song['tv' + k] = PARAMS['tv' + k].def; song['tm' + k] = false;
+  });
+  Object.assign(song, { bpm: 100, swing: 0, bars: 4, quant: true, arpOn: false });
+  patternIndex = PT('EMPTY'); seq = parsePattern(PATTERNS[patternIndex]);
+  stopVoice(); voice = null;
+  refreshAfterLoad();
+  showFileMsg('새 곡을 시작했어요');
+}
+function pressNew() {
+  const b = $('#newBtn');
+  if (songIsEmpty() || b.classList.contains('armed')) { newSong(); return; }
+  b.classList.add('armed');
+  showFileMsg('한 번 더 누르면 지금 곡을 지우고 새로 시작해요');
+  clearTimeout(newArmTimer); newArmTimer = setTimeout(disarmNew, 4500);
+}
 
 /* ===================== seven-segment displays ===================== */
 const SEG_MAP = { 0: 'abcdef', 1: 'bc', 2: 'abdeg', 3: 'abcdg', 4: 'bcfg', 5: 'acdfg', 6: 'acdefg', 7: 'abc', 8: 'abcdefg', 9: 'abcdfg', '-': 'g', ' ': '', P: 'abefg' };
@@ -2333,6 +2441,7 @@ function bindUI() {
   $$('.tinst').forEach((el, i) => el.addEventListener('change', () => { const v = +el.value; selectTrack(i); loadPreset(v); el.blur(); }));
   on('#panelToggle', 'click', () => { ui.panel = !ui.panel; renderUi(); save(); });
   on('.langs', 'click', e => { const b = e.target.closest('.lang'); if (b) setLang(b.dataset.lang); });
+  on('#newBtn', 'click', pressNew);
   on('#saveBtn', 'click', saveSongFile);
   on('#micBtn', 'click', recordMic);
   on('#voiceFileBtn', 'click', () => { const f = $('#voiceFile'); f.value = ''; f.click(); });
@@ -2451,7 +2560,9 @@ function fillSelects() {
   $('#patchSel').innerHTML = grp('실제 악기 녹음', list(num, true)) + grp('신스 음색', list(num, false));
   $$('.tinst').forEach(el => { el.innerHTML = grp('실제 악기 녹음', list(plain, true)) + grp('신스 음색', list(plain, false)); });
   const mixOpt = g => MIXES.map((m, i) => ((m.group || (m.world ? 'world' : 'genre')) === g ? `<option value="${i}">${withSub(m.n, m.ko)}</option>` : '')).join('');
-  $('#mixSel').innerHTML = grp('장르 믹스', mixOpt('genre')) + grp('재즈 믹스', mixOpt('jazz')) + grp('세계의 리듬', mixOpt('world'));
+  // A blank song (NEW) shows as 'NEW SONG'; it can only be reached with the NEW button, not picked here.
+  $('#mixSel').innerHTML = `<option value="-1" disabled hidden>${withSub('NEW SONG', '새 곡')}</option>`
+    + grp('장르 믹스', mixOpt('genre')) + grp('재즈 믹스', mixOpt('jazz')) + grp('세계의 리듬', mixOpt('world')) + grp('클래식', mixOpt('classical'));
   $('#patSel').innerHTML = PATTERNS.map((p, i) => `<option value="${i}">${withSub(p.n, p.ko)}</option>`).join('');
   $('#mixSel').value = String(mixIndex); $('#patSel').value = String(patternIndex);
   const tt = $('#toTrack'), keep = tt.value || '2';
@@ -2759,7 +2870,7 @@ async function initDownloads() {
   $('#saveBtn').hidden = $('#exportBtn').hidden = !downloads;
 }
 const fileStamp = () => { const d = new Date(), p = n => String(n).padStart(2, '0'); return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`; };
-const fileBase = () => `GROOVIX-${MIXES[mixIndex].n.replace(/[^A-Za-z0-9]+/g, '-')}-${fileStamp()}`;
+const fileBase = () => `GROOVIX-${(mixIndex >= 0 ? MIXES[mixIndex].n : 'NEW SONG').replace(/[^A-Za-z0-9]+/g, '-')}-${fileStamp()}`;
 async function offerFile(filename, data) {
   if (!downloads) { showFileMsg('이 화면에서는 파일을 내려받을 수 없어요'); return; }
   try { await downloads.save({ filename, data }); showFileMsg('저장했어요'); }
@@ -2998,7 +3109,7 @@ function restore(d) {
         .slice(0, 800).map(a => ({ m: Math.round(a[0]), v: clamp(a[1], 0.05, 1), s: a[2], d: Math.min(a[3], 16) }));
     });
     if (okIdx(d.cur, 3)) { cur = d.cur; patch = T().patch; }
-    if (okIdx(d.mixIndex, MIXES.length)) mixIndex = d.mixIndex;
+    if (d.mixIndex === -1 || okIdx(d.mixIndex, MIXES.length)) mixIndex = d.mixIndex;
     if (d.voice && d.voice.sr === VOICE_SR && typeof d.voice.b64 === 'string' && d.voice.b64.length < 6e6) { voice = { pcm: b64ToPcm(d.voice.b64), b64: d.voice.b64, buf: null }; }
     if (Number.isInteger(d.patternIndex) && d.patternIndex >= 0 && d.patternIndex < PATTERNS.length) patternIndex = d.patternIndex;
     if (Array.isArray(d.seq) && d.seq.length === ROWS.length && d.seq.every(r => typeof r === 'string' && /^[012]{16}$/.test(r))) seq = d.seq.map(r => Array.from(r, Number));
