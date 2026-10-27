@@ -1,0 +1,29 @@
+name: Release
+
+# Pushing a v* tag publishes groovix-<tag>.tar.gz (index.html at its root) as a GitHub Release.
+# sanghyunpark.dev pins one of these releases in webapps.json and serves it at /apps/groovix/.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Package
+        run: |
+          mkdir dist
+          cp index.html dist/
+          cp -r samples dist/
+          tar -czf "groovix-${GITHUB_REF_NAME}.tar.gz" -C dist .
+          tar -tzf "groovix-${GITHUB_REF_NAME}.tar.gz" | grep -qx "./index.html"
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "groovix-${GITHUB_REF_NAME}.tar.gz" --title "$GITHUB_REF_NAME" --generate-notes
