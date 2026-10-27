@@ -36,6 +36,11 @@ Push a `v*` tag. The Release workflow packs `index.html` and `samples/` into
 `groovix-<tag>.tar.gz` and attaches it to a GitHub Release. The site
 ([sanghyunpark.dev](https://sanghyunpark.pages.dev)) pins a release in its `webapps.json` and serves it at `/apps/groovix/`.
 
+## License
+
+The code is under the [MIT License](LICENSE). The recorded instrument sounds in `samples/` are not
+covered by it: they keep their own Creative Commons Attribution 3.0 license, listed in [CREDITS.md](CREDITS.md).
+
 ---
 
 ## 한국어
@@ -43,4 +48,4 @@ Push a `v*` tag. The Release workflow packs `index.html` and `samples/` into
 브라우저에서 돌아가는 3트랙 그루브박스입니다. 신스와 실제 녹음 악기, 16칸 드럼 머신, 루프 녹음,
 콧노래를 음표로 바꾸는 목소리 트랙, 그리고 하우스·로파이부터 보사노바·뽕짝·삼바까지 예시 믹스 22곡이 들어 있습니다.
 화면은 한국어·영어·일본어를 지원합니다. 라이브러리 없이 HTML, CSS, 자바스크립트와 웹 오디오만으로 만들었습니다.
-녹음 악기 소리의 출처와 라이선스(CC BY 3.0)는 [CREDITS.md](CREDITS.md)에 있습니다.
+코드는 [MIT 라이선스](LICENSE)를 따릅니다. 녹음 악기 소리는 여기에 포함되지 않으며, 출처와 라이선스(CC BY 3.0)는 [CREDITS.md](CREDITS.md)에 있습니다.
