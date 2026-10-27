@@ -23,7 +23,14 @@ jobs:
           tar -czf "groovix-${GITHUB_REF_NAME}.tar.gz" -C dist .
           tar -tzf "groovix-${GITHUB_REF_NAME}.tar.gz" | grep -qx "./index.html"
 
+      # A release already made for this tag on the GitHub website only gets its asset (re)placed.
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" "groovix-${GITHUB_REF_NAME}.tar.gz" --title "$GITHUB_REF_NAME" --generate-notes
+        run: |
+          asset="groovix-${GITHUB_REF_NAME}.tar.gz"
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$asset" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$asset" --title "$GITHUB_REF_NAME" --generate-notes
+          fi
